@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amazon Yönlendirme | Fenomio</title>
+  <script>
+    function isMobileDevice() {
+      return /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+
+    function redirectToAmazon() {
+      const fallbackUrl = "https://www.amazon.com.tr/dp/B0F1YW8TDH?tag=fenomio-482_482-21&th=1&psc=1";
+      const deepLinkAndroid = "intent://www.amazon.com.tr/dp/B0F1YW8TDH#Intent;scheme=https;package=com.amazon.mShop.android.shopping;end";
+      const deepLinkIOS = "amazon://www.amazon.com.tr/dp/B0F1YW8TDH";
+
+      if (isMobileDevice()) {
+        if (/android/i.test(navigator.userAgent)) {
+          window.location.href = deepLinkAndroid;
+        } else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+          window.location.href = deepLinkIOS;
+          setTimeout(() => window.location.href = fallbackUrl, 2000);
+        }
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    window.onload = redirectToAmazon;
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: #f2f2f2;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fenomio yönlendiriyor...</h1>
+  <p>Lütfen bekleyin, Amazon'a yönlendiriliyorsunuz.</p>
+</body>
+</html>
