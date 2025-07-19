@@ -2,35 +2,50 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Amazon Yönlendirme | Fenomio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amazon Ürünü | Fenomio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    a {
+      display: inline-block;
+      padding: 15px 25px;
+      font-size: 18px;
+      color: white;
+      background-color: #FF9900;
+      text-decoration: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
-  <p>Denemeee...</p>
+  <h1>Amazon'da ürünü aç</h1>
+  <p>Mobildeysen, Amazon uygulaması otomatik açılır.</p>
+
   <script>
-    const fallbackUrl = "https://www.amazon.com.tr/dp/B0F1YW8TDH?tag=fenomio-482_482-21&th=1&psc=1";
+    const amazonWebUrl = "https://www.amazon.com.tr/dp/B0F1YW8TDH?tag=fenomio-482_482-21&th=1&psc=1";
     const deepLinkAndroid = "intent://www.amazon.com.tr/dp/B0F1YW8TDH#Intent;scheme=https;package=com.amazon.mShop.android.shopping;end";
     const deepLinkIOS = "amazon://www.amazon.com.tr/dp/B0F1YW8TDH";
 
     const isAndroid = /android/i.test(navigator.userAgent);
     const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 
-    if (isAndroid) {
-      window.location = deepLinkAndroid;
-      setTimeout(() => { window.location.href = fallbackUrl }, 1000);
-    } else if (isIOS) {
-      // iOS için önce link tıklatılır
-      const a = document.createElement("a");
-      a.href = deepLinkIOS;
-      document.body.appendChild(a);
-      a.click();
+    let finalLink = amazonWebUrl;
 
-      // 2 saniye sonra fallback
-      setTimeout(() => { window.location.href = fallbackUrl }, 2000);
-    } else {
-      // Masaüstü
-      window.location.href = fallbackUrl;
+    if (isAndroid) {
+      finalLink = deepLinkAndroid;
+    } else if (isIOS) {
+      finalLink = deepLinkIOS;
     }
+
+    const a = document.createElement("a");
+    a.href = finalLink;
+    a.textContent = "Amazon'da Aç";
+    document.body.appendChild(a);
   </script>
 </body>
 </html>
